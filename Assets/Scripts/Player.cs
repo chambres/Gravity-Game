@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
     public bool updateTimer;
 
-    public int deaths =0;
+    public static int deaths = 0;
 
     float grav = 4.9f;
 
@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
         if (GameObject.FindGameObjectsWithTag("Player").Length > 1){
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
 
@@ -37,50 +37,80 @@ public class Player : MonoBehaviour
     }
 
     bool flipped = false;
+    private KeyCode[] keyCodes = new KeyCode[] { KeyCode.Alpha0, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9 };
 
-    void Update(){
+    void Update()
+    {
         if (updateTimer)
             finalTimer += Time.deltaTime;
-        if(flipped){
-            if(Input.GetKeyDown(KeyCode.A)){
+        if (flipped)
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
                 transform.rotation = Quaternion.Euler(0, 0, 90);
                 m_GravityDirection = GravityDirection.Right;
             }
-            else if(Input.GetKeyDown(KeyCode.D)){
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
                 transform.rotation = Quaternion.Euler(0, 0, -90);
                 m_GravityDirection = GravityDirection.Left;
-                
+
             }
-            else if(Input.GetKeyDown(KeyCode.W)){
+            else if (Input.GetKeyDown(KeyCode.W))
+            {
                 m_GravityDirection = GravityDirection.Down;
                 transform.rotation = new Quaternion(0, 0, 0, 0);
             }
-            else if(Input.GetKeyDown(KeyCode.S)){
+            else if (Input.GetKeyDown(KeyCode.S))
+            {
                 m_GravityDirection = GravityDirection.Up;
                 transform.rotation = new Quaternion(0, 0, 180, 0);
-                
+
             }
         }
-        else{
-            if(Input.GetKeyDown(KeyCode.A)){
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.A))
+            {
                 transform.rotation = Quaternion.Euler(0, 0, -90);
                 m_GravityDirection = GravityDirection.Left;
                 Debug.Log("hji");
             }
-            else if(Input.GetKeyDown(KeyCode.D)){
+            else if (Input.GetKeyDown(KeyCode.D))
+            {
                 transform.rotation = Quaternion.Euler(0, 0, 90);
                 m_GravityDirection = GravityDirection.Right;
             }
-            else if(Input.GetKeyDown(KeyCode.W)){
+            else if (Input.GetKeyDown(KeyCode.W))
+            {
                 m_GravityDirection = GravityDirection.Up;
                 transform.rotation = new Quaternion(0, 0, 180, 0);
             }
-            else if(Input.GetKeyDown(KeyCode.S)){
+            else if (Input.GetKeyDown(KeyCode.S))
+            {
                 m_GravityDirection = GravityDirection.Down;
                 transform.rotation = new Quaternion(0, 0, 0, 0);
             }
         }
-        
+
+        for (int i = 0; i < keyCodes.Length; ++i)
+        {
+            if (Input.GetKeyDown(keyCodes[i]))
+            {
+                Debug.Log(i);
+                SceneManager.LoadScene(i - 1);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Debug.Log(SceneManager.GetActiveScene().buildIndex);
+            if (SceneManager.GetActiveScene().buildIndex == 5)
+            {
+                SceneManager.LoadScene(0);
+                deaths = 0;
+            }
+        }
     }
 
 

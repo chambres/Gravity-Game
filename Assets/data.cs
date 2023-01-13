@@ -16,6 +16,8 @@ public class data : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        a.GetComponent<UnityEngine.UI.Text>().text = "Deaths: " + p.deaths + "\n\nTime: " + p.levelTimer;
+        int deaths;
+        deaths = Player.deaths;
+        a.GetComponent<UnityEngine.UI.Text>().text = "Deaths: " + deaths;
     }
 }
